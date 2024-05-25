@@ -62,3 +62,17 @@ resource "aws_instance" "frontend" {
   vpc_security_group_ids = [aws_security_group.frontend_access.id]
   user_data              = file("setup.sh")
 }
+
+resource "aws_eip" "frontend" {
+  instance = aws_instance.frontend.id
+  domain   = "vpc"
+}
+
+resource "aws_route53_record" "frontend" {
+  zone_id = data.aws_route53_zone.domain.zone_id
+  name    = "${var.hostname}.${var.domain_name}"
+  type    = "A"
+  ttl     = 300
+  records = [aws_eip.frontend.public_ip]
+}
+
