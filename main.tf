@@ -2,7 +2,7 @@ resource "aws_security_group" "frontend_access" {
 
   name        = "${var.project_name}-${var.project_env}-frontend"
   description = "${var.project_name}-${var.project_env}-frontend"
-
+  
 
   ingress {
 
@@ -51,6 +51,7 @@ resource "aws_security_group" "frontend_access" {
 
   tags = {
     Name = "${var.project_name}-${var.project_env}-frontend"
+    Test = Test
   }
 }
 
